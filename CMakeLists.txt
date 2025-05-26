@@ -3,4 +3,4 @@ project(optional C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_library(optional STATIC library.c)
+add_library(optional STATIC optional.c)
