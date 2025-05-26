@@ -81,7 +81,11 @@ typedef struct
  */
 inline optional_t optional_empty(void)
 {
-    const optional_t opt = { .value = NULL, .has_value = 0 };
+    optional_t opt;
+
+    // Initialize the optional to be empty
+    opt.value = NULL;
+    opt.has_value = 0;
     return opt;
 }
 
@@ -93,7 +97,11 @@ inline optional_t optional_empty(void)
  */
 inline optional_t optional_some(void *value)
 {
-    const optional_t opt = { .value = value, .has_value = 1 };
+    optional_t opt;
+
+    // Initialize the optional with the provided value
+    opt.value = value;
+    opt.has_value = 1; // Indicate that a value is present
     return opt;
 }
 
