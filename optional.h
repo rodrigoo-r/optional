@@ -79,7 +79,7 @@ typedef struct
  *
  * @return An optional_t with no value.
  */
-inline optional_t optional_empty(void)
+static inline optional_t optional_empty(void)
 {
     optional_t opt;
 
@@ -95,7 +95,7 @@ inline optional_t optional_empty(void)
  * @param value Pointer to the value to store.
  * @return An optional_t containing the given value.
  */
-inline optional_t optional_some(void *value)
+static inline optional_t optional_some(void *value)
 {
     optional_t opt;
 
@@ -111,7 +111,7 @@ inline optional_t optional_some(void *value)
  * @param opt The optional to check.
  * @return 1 if empty, 0 otherwise.
  */
-inline int optional_is_empty(const optional_t opt)
+static inline int optional_is_empty(const optional_t opt)
 {
     return !opt.has_value;
 }
@@ -123,7 +123,7 @@ inline int optional_is_empty(const optional_t opt)
  * @return Pointer to the value if present.
  * @note If the optional is empty, prints an error and exits the program.
  */
-inline void *optional_unwrap(const optional_t opt)
+static inline void *optional_unwrap(const optional_t opt)
 {
     // Warning: Should always use optional_is_empty() before this function
     if (opt.has_value)
