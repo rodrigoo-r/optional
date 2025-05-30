@@ -72,7 +72,7 @@ extern "C"
     static inline optional_NAME##_t optional_NAME##_empty(void) \
     {                                                           \
         optional_NAME##_t opt;                                  \
-        opt.value = NULL;                                       \
+        opt.value = (K){0};                                     \
         opt.has_value = 0;                                      \
         return opt;                                             \
     }                                                           \
