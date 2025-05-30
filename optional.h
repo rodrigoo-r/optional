@@ -77,7 +77,7 @@ extern "C"
         return opt;                                             \
     }                                                           \
                                                                 \
-    static inline optional_##NAME##_t optional_##NAME##_some(K *value) \
+    static inline optional_##NAME##_t optional_##NAME##_some(K value) \
     {                                                           \
         optional_##NAME##_t opt;                                \
         opt.value = value;                                      \
@@ -90,7 +90,7 @@ extern "C"
         return !opt.has_value;                                  \
     }                                                           \
                                                                 \
-    static inline K *optional_##NAME##_unwrap(const optional_##NAME##_t opt) \
+    static inline K optional_##NAME##_unwrap(const optional_##NAME##_t opt) \
     {                                                           \
         if (opt.has_value)                                      \
         {                                                       \
