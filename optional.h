@@ -65,32 +65,32 @@ extern "C"
 #define DEFINE_OPTIONAL_T(K, NAME)                              \
     typedef struct                                              \
     {                                                           \
-        K *value;                                               \
+        K value;                                                \
         int has_value;                                          \
-    } optional_NAME##_t;                                        \
+    } optional_##NAME##_t;                                      \
                                                                 \
-    static inline optional_NAME##_t optional_NAME##_empty(void) \
+    static inline optional_##NAME##_t optional_##NAME##_empty(void) \
     {                                                           \
-        optional_NAME##_t opt;                                  \
+        optional_##NAME##_t opt;                                \
         opt.value = (K){0};                                     \
         opt.has_value = 0;                                      \
         return opt;                                             \
     }                                                           \
                                                                 \
-    static inline optional_NAME##_t optional_NAME##_some(K *value) \
+    static inline optional_##NAME##_t optional_##NAME##_some(K *value) \
     {                                                           \
-        optional_NAME##_t opt;                                  \
+        optional_##NAME##_t opt;                                \
         opt.value = value;                                      \
         opt.has_value = 1;                                      \
         return opt;                                             \
     }                                                           \
                                                                 \
-    static inline int optional_NAME##_is_empty(const optional_NAME##_t opt) \
+    static inline int optional_##NAME##_is_empty(const optional_##NAME##_t opt) \
     {                                                           \
         return !opt.has_value;                                  \
     }                                                           \
                                                                 \
-    static inline K *optional_NAME##_unwrap(const optional_NAME##_t opt) \
+    static inline K *optional_##NAME##_unwrap(const optional_##NAME##_t opt) \
     {                                                           \
         if (opt.has_value)                                      \
         {                                                       \
@@ -103,7 +103,7 @@ extern "C"
 
 #ifndef FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED
 #   define FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED 1
-    DEFINE_OPTIONAL_T(void, generic)
+    DEFINE_OPTIONAL_T(void *, generic)
 #endif // FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED
 
 // ============= FLUENT LIB C++ =============
