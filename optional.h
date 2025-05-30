@@ -62,79 +62,49 @@ extern "C"
 {
 #endif
 
-/**
- * @brief Represents an optional value.
- *
- * The optional_t struct can either contain a pointer to a value (when present)
- * or indicate the absence of a value.
- */
-typedef struct
-{
-    void *value;        ///< Pointer to the value, NULL if not present
-    int has_value;      ///< Flag indicating if a value is present (1) or not (0)
-} optional_t;
-
-/**
- * @brief Creates an empty optional (no value present).
- *
- * @return An optional_t with no value.
- */
-static inline optional_t optional_empty(void)
-{
-    optional_t opt;
-
-    // Initialize the optional to be empty
-    opt.value = NULL;
-    opt.has_value = 0;
-    return opt;
-}
-
-/**
- * @brief Creates an optional containing a value.
- *
- * @param value Pointer to the value to store.
- * @return An optional_t containing the given value.
- */
-static inline optional_t optional_some(void *value)
-{
-    optional_t opt;
-
-    // Initialize the optional with the provided value
-    opt.value = value;
-    opt.has_value = 1; // Indicate that a value is present
-    return opt;
-}
-
-/**
- * @brief Checks if the optional is empty (no value present).
- *
- * @param opt The optional to check.
- * @return 1 if empty, 0 otherwise.
- */
-static inline int optional_is_empty(const optional_t opt)
-{
-    return !opt.has_value;
-}
-
-/**
- * @brief Retrieves the value from the optional.
- *
- * @param opt The optional to unwrap.
- * @return Pointer to the value if present.
- * @note If the optional is empty, prints an error and exits the program.
- */
-static inline void *optional_unwrap(const optional_t opt)
-{
-    // Warning: Should always use optional_is_empty() before this function
-    if (opt.has_value)
-    {
-        return opt.value;
+#define DEFINE_OPTIONAL_T(K, NAME)                              \
+    typedef struct                                              \
+    {                                                           \
+        K *value;                                               \
+        int has_value;                                          \
+    } optional_NAME##_t;                                        \
+                                                                \
+    static inline optional_NAME##_t optional_NAME##_empty(void) \
+    {                                                           \
+        optional_NAME##_t opt;                                  \
+        opt.value = NULL;                                       \
+        opt.has_value = 0;                                      \
+        return opt;                                             \
+    }                                                           \
+                                                                \
+    static inline optional_NAME##_t optional_NAME##_some(K *value) \
+    {                                                           \
+        optional_NAME##_t opt;                                  \
+        opt.value = value;                                      \
+        opt.has_value = 1;                                      \
+        return opt;                                             \
+    }                                                           \
+                                                                \
+    static inline int optional_NAME##_is_empty(const optional_NAME##_t opt) \
+    {                                                           \
+        return !opt.has_value;                                  \
+    }                                                           \
+                                                                \
+    static inline K *optional_NAME##_unwrap(const optional_NAME##_t opt) \
+    {                                                           \
+        if (opt.has_value)                                      \
+        {                                                       \
+            return opt.value;                                   \
+        }                                                       \
+                                                                \
+        puts("Error: Attempted to unwrap an optional with no value."); \
+        exit(1);                                                \
     }
 
-    // If no value is present, panic
-    puts("Error: Attempted to unwrap an optional with no value.");
-    exit(1);
-}
+#ifndef FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED
+#   define FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED 1
+    DEFINE_OPTIONAL_T(void, generic)
+#endif // FLUENT_LIBC_GENERIC_OPTIONAL_DEFINED
 
 // ============= FLUENT LIB C++ =============
 #if defined(__cplusplus)
